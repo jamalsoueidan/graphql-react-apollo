@@ -1,0 +1,27 @@
+query Organizations {
+  organizations {
+    id
+    name
+    users {
+      name
+    }
+  }
+}
+
+mutation AddOrganization($name: String, $userId: String) {
+  addOrganization(name: $name, userId: $userId) {
+    name
+  }
+}
+
+mutation UpdateOrganization($name: String, $id: String) {
+  updateOrganization(name: $name, id: $id) {
+    name
+  }
+}
+
+mutation DeleteOrganization($id: String) {
+  deleteOrganization(id: $id) {
+    name
+  }
+}
