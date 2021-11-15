@@ -25,3 +25,10 @@ mutation DeleteOrganization($id: String) {
     name
   }
 }
+
+query Users {
+  users {
+    id
+    name
+  }
+}

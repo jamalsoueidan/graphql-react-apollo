@@ -9,18 +9,28 @@ const db = {
   users: [
     {
       organization: "123", // this is a relation by id
-      id: "abc",
+      id: "1",
       name: "Elon Musk",
+    },
+    {
+      organization: "123", // this is a relation by id
+      id: "2",
+      name: "jamal",
+    },
+    {
+      organization: "1235", // this is a relation by id
+      id: "3",
+      name: "anders",
     },
   ],
   organizations: [
     {
-      users: ["abc"], // this is a relation by ids
+      users: ["1"], // this is a relation by ids
       id: "123",
       name: "Space X",
     },
     {
-      users: ["abc"], // this is a relation by ids
+      users: ["2"], // this is a relation by ids
       id: "1235",
       name: "testerne",
     },

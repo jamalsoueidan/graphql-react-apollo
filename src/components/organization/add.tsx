@@ -1,60 +1,74 @@
 import Button from "@mui/material//Button";
 import TextField from "@mui/material//TextField";
-import { useFormik } from "formik";
-import * as yup from "yup";
+import { Form, Formik } from "formik";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import * as queries from "../../generated";
 
-const validationSchema = yup.object({
-  email: yup
-    .string()
-    .email("Enter a valid email")
-    .required("Email is required"),
-  password: yup
-    .string()
-    .min(8, "Password should be of minimum 8 characters length")
-    .required("Password is required"),
-});
+interface MyFormValues {
+  name: string;
+  users: string[];
+}
 
 const AddOrganization = () => {
-  const formik = useFormik({
-    initialValues: {
-      email: "foobar@example.com",
-      password: "foobar",
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
+  const initialValues: MyFormValues = { name: "", users: ["1"] };
+  const { data, error, loading } = queries.useUsersQuery();
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      //arr.push(value);
+    } else {
+      //arr.splice(arr.indexOf(value), 1);
+    }
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error || !data) {
+    return <div>ERROR</div>;
+  }
 
   return (
-    <div>
-      <form onSubmit={formik.handleSubmit}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={(values, actions) => {
+        console.log({ values, actions });
+        alert(JSON.stringify(values, null, 2));
+        actions.setSubmitting(false);
+      }}
+    >
+      <Form>
         <TextField
           fullWidth
-          id="email"
-          name="email"
-          label="Email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
+          id="name"
+          name="name"
+          label="Name"
+          autoComplete="off"
         />
-        <TextField
-          fullWidth
-          id="password"
-          name="password"
-          label="Password"
-          type="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={formik.touched.password && formik.errors.password}
-        />
+        <FormGroup>
+          {data.users?.map((user) => (
+            <FormControlLabel
+              key={user?.id}
+              control={
+                <Checkbox
+                  name="users"
+                  id="users"
+                  value={user?.id || ""}
+                  onChange={handleChange}
+                />
+              }
+              label={user?.name || ""}
+            />
+          ))}
+        </FormGroup>
+
         <Button color="primary" variant="contained" fullWidth type="submit">
           Submit
         </Button>
-      </form>
-    </div>
+      </Form>
+    </Formik>
   );
 };
 

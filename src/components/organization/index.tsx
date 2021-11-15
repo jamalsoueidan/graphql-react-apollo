@@ -1,8 +1,5 @@
-import FolderIcon from "@mui/icons-material/Folder";
-import Avatar from "@mui/material/Avatar";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import * as queries from "../../generated";
 import AlertDialog from "./alert";
@@ -36,11 +33,6 @@ const Organization = () => {
             />
           }
         >
-          <ListItemAvatar>
-            <Avatar>
-              <FolderIcon />
-            </Avatar>
-          </ListItemAvatar>
           <ListItemText
             primary={organization?.name}
             secondary={"Users:" + organization?.users?.length}
