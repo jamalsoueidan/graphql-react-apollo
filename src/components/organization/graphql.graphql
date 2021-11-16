@@ -8,8 +8,8 @@ query Organizations {
   }
 }
 
-mutation AddOrganization($name: String, $userId: String) {
-  addOrganization(name: $name, userId: $userId) {
+mutation AddOrganization($name: String, $users: [String!]) {
+  addOrganization(name: $name, users: $users) {
     name
   }
 }

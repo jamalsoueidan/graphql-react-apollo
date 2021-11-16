@@ -14,6 +14,10 @@ const withOrganizations = (WrappedComponent: any) => {
       refetchQueries: [queries.OrganizationsDocument, "Organizations"],
     });
 
+    const [addOrganizationMutation] = queries.useAddOrganizationMutation({
+      refetchQueries: [queries.OrganizationsDocument, "Organizations"],
+    });
+
     if (loading) {
       return <div>Loading...</div>;
     }
@@ -28,6 +32,9 @@ const withOrganizations = (WrappedComponent: any) => {
         deleteOrganization={(options: any) =>
           deleteOrganizationMutation(options)
         }
+        addOrganization={(options: any) => {
+          addOrganizationMutation(options);
+        }}
         {...props}
       />
     );

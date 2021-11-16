@@ -10,7 +10,7 @@ import { Form, Formik, useField } from "formik";
 import * as React from "react";
 import * as Yup from "yup";
 import withUsers, { WithUsersProps } from "../../data/with-users";
-import { User } from "../../generated";
+import * as queries from "../../generated";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
@@ -40,18 +40,23 @@ const MyCheckbox = ({ label, ...props }: any) => {
 
 const AddOrganization = ({ users }: WithUsersProps) => {
   const initialValues: MyFormValues = { name: "", users: [] };
+  const [addOrganizationMutation] = queries.useAddOrganizationMutation({
+    refetchQueries: [queries.OrganizationsDocument, "Organizations"],
+  });
 
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values, actions) => {
-        console.log({ values, actions });
-        alert(JSON.stringify(values, null, 2));
-        actions.setSubmitting(false);
+      onSubmit={async (values, actions) => {
+        actions.setSubmitting(true);
+        await addOrganizationMutation({
+          variables: values,
+        });
+        actions.resetForm();
       }}
     >
-      {({ errors, touched }) => (
+      {({ errors, touched, values, handleChange, handleBlur }) => (
         <Form>
           <FormControl
             required
@@ -63,8 +68,11 @@ const AddOrganization = ({ users }: WithUsersProps) => {
             <TextField
               fullWidth
               name="name"
-              label="Name"
+              label="name"
               autoComplete="off"
+              value={values.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
               error={touched.name && Boolean(errors.name)}
               helperText={touched.name && errors.name}
             />
@@ -75,12 +83,13 @@ const AddOrganization = ({ users }: WithUsersProps) => {
             component="fieldset"
             variant="standard"
             fullWidth
+            margin="normal"
           >
             <FormLabel component="legend">
               Pick one users belongs to this organization
             </FormLabel>
             <FormGroup>
-              {users.map((user: User) => (
+              {users.map((user: queries.User) => (
                 <MyCheckbox
                   key={user?.id}
                   name="users"

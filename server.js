@@ -51,7 +51,7 @@ const server = new ApolloServer({
   typeDefs: gql`
     type Mutation {
       signup(organization: String, name: String): User
-      addOrganization(name: String, userId: String): Organization
+      addOrganization(name: String, users: [String!]): Organization
       deleteOrganization(id: String): Organization
       updateOrganization(id: String, name: String): Organization
     }
@@ -84,11 +84,11 @@ const server = new ApolloServer({
         db.users.push(user);
         return user;
       },
-      addOrganization(_, { name, userId }) {
+      addOrganization(_, { name, users }) {
         const organization = {
           id: randomId(),
           name,
-          users: [userId],
+          users,
         };
         const match = db.organizations.find(
           (org) => org.name === organization.name
