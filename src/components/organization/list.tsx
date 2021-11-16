@@ -1,32 +1,25 @@
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import * as queries from "../../generated";
+import withOrganizations, {
+  WithOrganizationsProps,
+} from "../../data/with-organizations";
+import { Organization } from "../../generated";
 import AlertDialog from "./alert";
 
-const ListOrganization = () => {
-  const { data, error, loading } = queries.useOrganizationsQuery();
-  const [deleteOrganizationMutation] = queries.useDeleteOrganizationMutation({
-    refetchQueries: [queries.OrganizationsDocument, "Organizations"],
-  });
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error || !data) {
-    return <div>ERROR</div>;
-  }
-
+const ListOrganization = ({
+  organizations,
+  deleteOrganization,
+}: WithOrganizationsProps) => {
   return (
     <List>
-      {data.organizations?.map((organization) => (
+      {organizations?.map((organization: Organization) => (
         <ListItem
           key={organization?.id}
           secondaryAction={
             <AlertDialog
               action={() =>
-                deleteOrganizationMutation({
+                deleteOrganization({
                   variables: { id: organization?.id },
                 })
               }
@@ -43,4 +36,4 @@ const ListOrganization = () => {
   );
 };
 
-export default ListOrganization;
+export default withOrganizations(ListOrganization);

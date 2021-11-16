@@ -9,7 +9,8 @@ import FormLabel from "@mui/material/FormLabel";
 import { Form, Formik, useField } from "formik";
 import * as React from "react";
 import * as Yup from "yup";
-import * as queries from "../../generated";
+import withUsers, { WithUsersProps } from "../../data/with-users";
+import { User } from "../../generated";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
@@ -37,17 +38,8 @@ const MyCheckbox = ({ label, ...props }: any) => {
   );
 };
 
-const AddOrganization = () => {
+const AddOrganization = ({ users }: WithUsersProps) => {
   const initialValues: MyFormValues = { name: "", users: [] };
-  const { data, error, loading } = queries.useUsersQuery();
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error || !data) {
-    return <div>ERROR</div>;
-  }
 
   return (
     <Formik
@@ -70,7 +62,6 @@ const AddOrganization = () => {
           >
             <TextField
               fullWidth
-              id="name"
               name="name"
               label="Name"
               autoComplete="off"
@@ -89,7 +80,7 @@ const AddOrganization = () => {
               Pick one users belongs to this organization
             </FormLabel>
             <FormGroup>
-              {data.users?.map((user) => (
+              {users.map((user: User) => (
                 <MyCheckbox
                   key={user?.id}
                   name="users"
@@ -109,4 +100,4 @@ const AddOrganization = () => {
   );
 };
 
-export default AddOrganization;
+export default withUsers(AddOrganization);
