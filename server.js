@@ -53,7 +53,11 @@ const server = new ApolloServer({
       signup(organization: String, name: String): User
       addOrganization(name: String, users: [String!]): Organization
       deleteOrganization(id: String): Organization
-      updateOrganization(id: String, name: String): Organization
+      updateOrganization(
+        id: String
+        name: String
+        users: [String!]
+      ): Organization
     }
 
     type Query {
@@ -103,12 +107,13 @@ const server = new ApolloServer({
         db.organizations = db.organizations.filter((org) => org.id !== id);
         return match;
       },
-      updateOrganization(_, { id, name }) {
+      updateOrganization(_, { id, name, users }) {
         const match = db.organizations.find((org) => org.id === id);
         if (!match) throw Error("The organisation does not exists");
         db.organizations = db.organizations.map((o) => {
           if (o.id === id) {
             o.name = match.name = name;
+            o.users = match.users = users;
           }
           return o;
         });
