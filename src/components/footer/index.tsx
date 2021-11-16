@@ -1,12 +1,5 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import CabinIcon from "@mui/icons-material/Cabin";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Organization from "./components/organization";
 
 const Footer = () => {
   return (
