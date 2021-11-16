@@ -4,6 +4,7 @@ import * as queries from "../generated";
 export interface WithOrganizationsProps {
   organizations: queries.Organization[];
   deleteOrganization: any;
+  addOrganization: any;
 }
 
 const withOrganizations = (WrappedComponent: any) => {

@@ -1,18 +1,21 @@
 import Button from "@mui/material//Button";
 import TextField from "@mui/material//TextField";
+import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormLabel from "@mui/material/FormLabel";
-import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import { Form, Formik, useField } from "formik";
 import * as React from "react";
 import * as Yup from "yup";
+import withOrganizations, {
+  WithOrganizationsProps,
+} from "../../data/with-organizations";
 import withUsers, { WithUsersProps } from "../../data/with-users";
 import * as queries from "../../generated";
-import Typography from "@mui/material/Typography";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
@@ -40,11 +43,10 @@ const MyCheckbox = ({ label, ...props }: any) => {
   );
 };
 
-const AddOrganization = ({ users }: WithUsersProps) => {
+interface AddOrganizationProps extends WithUsersProps, WithOrganizationsProps {}
+
+const AddOrganization = ({ users, addOrganization }: AddOrganizationProps) => {
   const initialValues: MyFormValues = { name: "", users: [] };
-  const [addOrganizationMutation] = queries.useAddOrganizationMutation({
-    refetchQueries: [queries.OrganizationsDocument, "Organizations"],
-  });
 
   return (
     <Formik
@@ -52,7 +54,7 @@ const AddOrganization = ({ users }: WithUsersProps) => {
       validationSchema={validationSchema}
       onSubmit={async (values, actions) => {
         actions.setSubmitting(true);
-        await addOrganizationMutation({
+        await addOrganization({
           variables: values,
         });
         actions.resetForm();
@@ -112,4 +114,4 @@ const AddOrganization = ({ users }: WithUsersProps) => {
   );
 };
 
-export default withUsers(AddOrganization);
+export default withOrganizations(withUsers(AddOrganization));
