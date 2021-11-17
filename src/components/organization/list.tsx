@@ -1,39 +1,49 @@
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import withOrganizations, {
-  WithOrganizationsProps,
-} from "../../data/with-organizations";
+import {
+  default as ListItemButton,
+  default as ListItemText
+} from "@mui/material/ListItemText";
+import * as React from "react";
+import { useOrganization } from "../../data/organizations-context";
 import { Organization } from "../../generated";
 import AlertDialog from "./alert";
 
+interface ListOrganizationProps {
+  setFormOrganization: any;
+}
+
 const ListOrganization = ({
-  organizations,
-  deleteOrganization,
-}: WithOrganizationsProps) => {
+  setFormOrganization,
+}: ListOrganizationProps) => {
+
+  const {organizations, deleteOrganization} = useOrganization();
+
   return (
-    <List>
+    <List dense>
       {organizations?.map((organization: Organization) => (
         <ListItem
-          key={organization?.id}
+          key={organization.id}
           secondaryAction={
             <AlertDialog
               action={() =>
                 deleteOrganization({
-                  variables: { id: organization?.id },
+                  variables: { id: organization.id },
                 })
               }
             />
           }
         >
-          <ListItemText
-            primary={organization?.name}
-            secondary={"Users:" + organization?.users?.length}
-          />
+          <ListItemButton onClick={() => setFormOrganization(organization)}>
+            <ListItemText
+              primary={organization.name}
+              secondary={"Users:" + organization.users?.length}
+            />
+          </ListItemButton>
         </ListItem>
       ))}
     </List>
   );
 };
 
-export default withOrganizations(ListOrganization);
+export default ListOrganization;

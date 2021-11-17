@@ -1,13 +1,18 @@
+import { useState } from "react";
+import { OrganizationProvider } from "../../data/organizations-context";
+import { Organization } from "../../generated";
 import AddOrganization from "./add";
 import ListOrganization from "./list";
 
-const Organization = () => {
+const OrganizationIndex = () => {
+  const [setFormOrganization] = useState<Organization>();
+
   return (
-    <>
-      <ListOrganization />
+    <OrganizationProvider>
+      <ListOrganization setFormOrganization={setFormOrganization} />
       <AddOrganization />
-    </>
+    </OrganizationProvider>
   );
 };
 
-export default Organization;
+export default OrganizationIndex;

@@ -3,6 +3,7 @@ query Organizations {
     id
     name
     users {
+      id
       name
     }
   }

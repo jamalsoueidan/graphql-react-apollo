@@ -2,7 +2,7 @@ const { ApolloServer, gql } = require("apollo-server");
 const jwt = require("jsonwebtoken");
 
 const JWT_SECRET = "makethislongandrandom";
-const randomId = () => Math.floor(Math.random() * 100);
+const randomId = () => "" + Math.floor(Math.random() * 100);
 
 // This could also be MongoDB, PostgreSQL, etc
 const db = {
