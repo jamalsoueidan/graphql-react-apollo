@@ -9,6 +9,9 @@ import { useOrganization } from "../../data/organizations-context";
 import { Organization } from "../../generated";
 import AlertDialog from "./alert";
 
+/* ---------------------------------------------------------
+  This component use the provider context useOrganization()
+----------------------------------------------------------- */
 interface ListOrganizationProps {
   setFormOrganization: any;
 }

@@ -7,6 +7,10 @@ import withOrganizations, {
 import * as queries from "../../generated";
 import OrganizationForm from "./_form";
 
+/* --------------------------------------------
+  This component use the withOrganization
+---------------------------------------------- */
+
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
   users: Yup.array().min(1, "Pick at least 1 user").required("required"),
