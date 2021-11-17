@@ -10,30 +10,32 @@ import validationSchema from "./form/_validation-schema";
 /* --------------------------------------------
   This component use the withOrganization
 ---------------------------------------------- */
-const initialValues: queries.Organization = {
-  name: "",
-  users: [],
-};
 
-const AddOrganization = ({
-  addOrganization,
-}: WithOrganizationsProps) => {
+interface EditOrganizationProps extends WithOrganizationsProps{
+  organization:queries.Organization
+}
+
+const EditOrganization = ({
+  updateOrganization,
+  organization
+}: EditOrganizationProps) => {
 
   return (
     <Formik
-      initialValues={initialValues}
+      enableReinitialize={true}
+      initialValues={organization}
       validationSchema={validationSchema}
       onSubmit={async (values, actions) => {
         actions.setSubmitting(true);
-        await addOrganization({
+        await updateOrganization({
           variables: values,
         });
         actions.resetForm();
       }}
     >
-      {(props) => (<OrganizationForm action='add' {...props} />)}
+      {(props) => (<OrganizationForm action='update' {...props} />)}
     </Formik>
   );
 };
 
-export default withOrganizations(AddOrganization);
+export default withOrganizations(EditOrganization);

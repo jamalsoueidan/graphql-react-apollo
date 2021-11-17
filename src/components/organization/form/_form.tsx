@@ -1,5 +1,4 @@
 
-import { Checkbox, FormControlLabel } from "@mui/material";
 import Button from "@mui/material//Button";
 import TextField from "@mui/material//TextField";
 import Box from "@mui/material/Box";
@@ -8,26 +7,11 @@ import FormGroup from "@mui/material/FormGroup";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormLabel from "@mui/material/FormLabel";
 import Typography from "@mui/material/Typography";
-import { Form, FormikProps, useField } from "formik";
+import { Form, FormikProps } from "formik";
 import * as React from "react";
-import withUsers, { WithUsersProps } from "../../data/with-users";
-import * as queries from "../../generated";
-
-const MyCheckbox = ({ label, ...props }: any) => {
-  const [field] = useField(props);
-  return (
-    <FormControlLabel
-      control={
-        <Checkbox
-          checked={field.value.includes(props.value)}
-          {...field}
-          {...props}
-        />
-      }
-      label={label}
-    />
-  );
-};
+import withUsers, { WithUsersProps } from "../../../data/with-users";
+import * as queries from "../../../generated";
+import CustomCheckbox from "./_custom-checkbox";
 
 interface OrganizationFormProps extends WithUsersProps, FormikProps<queries.Organization> {
   action:String
@@ -68,7 +52,7 @@ const OrganizationForm = ({ errors, touched, values, handleChange, handleBlur, r
           </FormLabel>
           <FormGroup>
             {users.map((user: queries.User) => (
-              <MyCheckbox
+              <CustomCheckbox
                 key={user?.id}
                 name="users"
                 label={user?.name}

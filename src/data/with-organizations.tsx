@@ -5,6 +5,7 @@ export interface WithOrganizationsProps {
   organizations: queries.Organization[];
   deleteOrganization: any;
   addOrganization: any;
+  updateOrganization:any;
 }
 
 const withOrganizations = (WrappedComponent: any) => {
@@ -16,6 +17,10 @@ const withOrganizations = (WrappedComponent: any) => {
     });
 
     const [addOrganizationMutation] = queries.useAddOrganizationMutation({
+      refetchQueries: [queries.OrganizationsDocument, "Organizations"],
+    });
+
+    const [updateOrganizationMutation] = queries.useUpdateOrganizationMutation({
       refetchQueries: [queries.OrganizationsDocument, "Organizations"],
     });
 
@@ -35,6 +40,9 @@ const withOrganizations = (WrappedComponent: any) => {
         }
         addOrganization={(options: any) => {
           addOrganizationMutation(options);
+        }}
+        updateOrganization={(options:any) => {
+          updateOrganizationMutation(options)
         }}
         {...props}
       />
