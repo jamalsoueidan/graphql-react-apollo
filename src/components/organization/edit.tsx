@@ -12,28 +12,37 @@ import validationSchema from "./form/_validation-schema";
 ---------------------------------------------- */
 
 interface EditOrganizationProps extends WithOrganizationsProps{
-  organization:queries.Organization
+  organization:queries.Organization,
+  setFormOrganization: (organization: queries.Organization | null) => any
 }
 
 const EditOrganization = ({
   updateOrganization,
+  setFormOrganization,
   organization
 }: EditOrganizationProps) => {
+
+  const users = organization?.users?.map(u => u?.id)
+
+  const handleReset = () => {
+    setFormOrganization(null)
+  }
 
   return (
     <Formik
       enableReinitialize={true}
-      initialValues={organization}
+      initialValues={{...organization, users}}
       validationSchema={validationSchema}
       onSubmit={async (values, actions) => {
+
         actions.setSubmitting(true);
         await updateOrganization({
           variables: values,
         });
-        actions.resetForm();
+        //setFormOrganization(null);
       }}
     >
-      {(props) => (<OrganizationForm action='update' {...props} />)}
+      {(props) => (<OrganizationForm action='update' {...props} handleReset={handleReset}/>)}
     </Formik>
   );
 };

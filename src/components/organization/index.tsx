@@ -7,8 +7,7 @@ import ListOrganization from "./list";
 
 const OrganizationIndex = () => {
   const [organization, setFormOrganization] = useState<Organization>();
-
-  const form = organization ? <EditOrganization organization={organization} /> : <AddOrganization />
+  const form = organization ? <EditOrganization organization={organization} setFormOrganization={setFormOrganization} /> : <AddOrganization />
 
   return (
     <OrganizationProvider>

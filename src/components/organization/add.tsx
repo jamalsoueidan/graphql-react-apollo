@@ -28,6 +28,11 @@ const AddOrganization = ({
         await addOrganization({
           variables: values,
         });
+        console.log('before')
+        actions.resetForm();
+      }}
+      onReset={(values, actions) =>{
+        console.log('reset')
         actions.resetForm();
       }}
     >

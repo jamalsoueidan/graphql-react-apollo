@@ -8,9 +8,9 @@ HOC is used in the [organization/add.tsx](https://github.com/jamalsoueidan/graph
 
 # References
 
-[https://kentcdodds.com/blog/how-to-use-react-context-effectively](https://kentcdodds.com/blog/how-to-use-react-context-effectively)
+[how-to-use-react-context-effectively](https://kentcdodds.com/blog/how-to-use-react-context-effectively)
 
-[https://blog.tylerbuchea.com/a-simple-graphql-example-with-relationships/](https://blog.tylerbuchea.com/a-simple-graphql-example-with-relationships/)
+[a-simple-graphql-example-with-relationships/](https://blog.tylerbuchea.com/a-simple-graphql-example-with-relationships/)
 
 # Screenshot
 

@@ -17,7 +17,7 @@ interface OrganizationFormProps extends WithUsersProps, FormikProps<queries.Orga
   action:String
 }
 
-const OrganizationForm = ({ errors, touched, values, handleChange, handleBlur, resetForm, action, users }:OrganizationFormProps) => {
+const OrganizationForm = ({ errors, touched, values, handleChange, handleBlur, handleReset, action, users }:OrganizationFormProps) => {
   return (
     <Form>
       <Box sx={{ display: "flex", flexDirection: "column", pl: 2, pr: 2 }}>
@@ -62,13 +62,13 @@ const OrganizationForm = ({ errors, touched, values, handleChange, handleBlur, r
           </FormGroup>
           <FormHelperText>{touched.users && errors.users}</FormHelperText>
         </FormControl>
-        <Button color="primary" variant="contained" type="submit">
+        <Button color="primary" variant="contained" type="submit" sx={{ mb: 1 }}>
           {action === 'update'
-            ? "Update organization"
-            : "Add new organization"}
+            ? "Update"
+            : "Add new"} organization
         </Button>
-        <Button color="primary" variant="contained">
-          Reset
+        <Button color="primary" variant="contained" onClick={handleReset}>
+          {action === 'update' ? "Cancel" : "Reset"}
         </Button>
       </Box>
     </Form>
