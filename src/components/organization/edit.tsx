@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 import * as React from "react";
 import withOrganizations, {
-  WithOrganizationsProps
+  WithOrganizationsProps,
 } from "../../data/with-organizations";
 import * as queries from "../../generated";
 import OrganizationForm from "./form/_form";
@@ -11,38 +11,43 @@ import validationSchema from "./form/_validation-schema";
   This component use the withOrganization
 ---------------------------------------------- */
 
-interface EditOrganizationProps extends WithOrganizationsProps{
-  organization:queries.Organization,
-  setFormOrganization: (organization: queries.Organization | null) => any
+//Extend WithOrgainzationsProps interface for props
+interface EditOrganizationProps extends WithOrganizationsProps {
+  organization: queries.Organization;
+  setFormOrganization: (organization: queries.Organization | null) => any;
 }
 
 const EditOrganization = ({
   updateOrganization,
   setFormOrganization,
-  organization
+  organization,
 }: EditOrganizationProps) => {
-
-  const users = organization?.users?.map(u => u?.id)
+  const users = organization?.users?.map((u) => u?.id);
 
   const handleReset = () => {
-    setFormOrganization(null)
-  }
+    setFormOrganization(null);
+  };
 
   return (
     <Formik
       enableReinitialize={true}
-      initialValues={{...organization, users}}
+      initialValues={{ ...organization, users }}
       validationSchema={validationSchema}
       onSubmit={async (values, actions) => {
-
         actions.setSubmitting(true);
         await updateOrganization({
           variables: values,
         });
-        //setFormOrganization(null);
+        setFormOrganization(null);
       }}
     >
-      {(props) => (<OrganizationForm action='update' {...props} handleReset={handleReset}/>)}
+      {(props) => (
+        <OrganizationForm
+          action="update"
+          {...props}
+          handleReset={handleReset}
+        />
+      )}
     </Formik>
   );
 };

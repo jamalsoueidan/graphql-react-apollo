@@ -15,8 +15,8 @@ mutation AddOrganization($name: String, $users: [String!]) {
   }
 }
 
-mutation UpdateOrganization($name: String, $id: String) {
-  updateOrganization(name: $name, id: $id) {
+mutation UpdateOrganization($id: String, $name: String, $users: [String!]) {
+  updateOrganization(id: $id, name: $name, users: $users) {
     name
   }
 }

@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 import * as React from "react";
 import withOrganizations, {
-  WithOrganizationsProps
+  WithOrganizationsProps,
 } from "../../data/with-organizations";
 import * as queries from "../../generated";
 import OrganizationForm from "./form/_form";
@@ -15,10 +15,8 @@ const initialValues: queries.Organization = {
   users: [],
 };
 
-const AddOrganization = ({
-  addOrganization,
-}: WithOrganizationsProps) => {
-
+//Use WithOrgainzationsProps interface for props
+const AddOrganization = ({ addOrganization }: WithOrganizationsProps) => {
   return (
     <Formik
       initialValues={initialValues}
@@ -28,15 +26,10 @@ const AddOrganization = ({
         await addOrganization({
           variables: values,
         });
-        console.log('before')
-        actions.resetForm();
-      }}
-      onReset={(values, actions) =>{
-        console.log('reset')
         actions.resetForm();
       }}
     >
-      {(props) => (<OrganizationForm action='add' {...props} />)}
+      {(props) => <OrganizationForm action="add" {...props} />}
     </Formik>
   );
 };
