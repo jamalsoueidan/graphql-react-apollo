@@ -2,6 +2,10 @@
 
 I try to demostrate context + hoc in different use cases.
 
+I use Material UI with Formik and Apollo Client.
+
+You can see all the organizations, update any organization, add new organization, and delete organization.
+
 Context is used in the [organization/list.tsx](https://github.com/jamalsoueidan/graphql-react-apollo/blob/Main/src/components/organization/list.tsx) [useOrganization](https://github.com/jamalsoueidan/graphql-react-apollo/blob/Main/src/data/organizations-context.tsx)
 
 - Global shared state.
